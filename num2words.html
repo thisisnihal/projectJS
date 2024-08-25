@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/svg+xml"
+        href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MCIgaGVpZ2h0PSI1MCIgdmlld0JveD0iMCAwIDUwIDUwIj4KICA8cmVjdCB3aWR0aD0iNTAiIGhlaWdodD0iNTAiIGZpbGw9IiMzMzMiLz4KICA8dGV4dCB4PSIxNSIgeT0iMzUiIGZvbnQtc2l6ZT0iMzBweCIgZmlsbD0iI2ZmZiIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIj5OPC90ZXh0Pgo8L3N2Zz4=">
+
+
+    <title>Number 2 Words</title>
+
+    <meta name="description" content="Convert Numbers into English Words" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: monospace, Arial, Helvetica, sans-serif;
+        }
+
+        :root {
+            --btn-bg: rgb(17, 17, 17);
+            --btn-color: white;
+            --btn-hover-bg-color: rgb(35, 35, 35);
+            --btn-active-color: rgb(192, 192, 253);
+            --btn-active-bg-color: gray;
+            --btn-active-glow: #50e5ff;
+
+            --card-bg: rgb(124 250 208 / 30%);
+
+        }
+
+        body {
+            width: 100vw;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgb(63, 94, 251);
+            background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 179, 1) 100%);
+            font-weight: 600;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        #card {
+            background-color: var(--card-bg);
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            flex-direction: column;
+            padding: 1rem 1rem;
+            margin: 4rem 1rem;
+            gap: 1rem;
+            width: 600px;
+            min-height: 400px;
+            border-radius: 8px;
+            backdrop-filter: blur(40px);
+        }
+
+        @media only screen and (max-width: 600px) {
+            #card {}
+        }
+
+        .btn {
+            align-self: center;
+            width: auto;
+            height: auto;
+            padding: 10px 10px;
+            background-color: var(--btn-bg);
+            color: aliceblue;
+            border-radius: 4px;
+            border: transparent;
+
+        }
+
+        .btn:hover {
+            background-color: var(--btn-hover-bg-color);
+        }
+
+        .btn:active {
+            background-color: var(--btn-hover-bg-color);
+            color: var(--btn-active-color);
+            filter: drop-shadow(0 0 10px var(--btn-active-glow)) drop-shadow(0 0 30px var(--btn-active-glow)) drop-shadow(0 0 50px var(--btn-active-glow));
+
+        }
+
+        .copy-btn {
+            display: inline;
+        }
+
+        input {
+            border: transparent;
+            border-radius: 4px;
+            padding: 4px 6px;
+            max-width: 500;
+            display: inline-block;
+        }
+
+        .text-l {
+            font-size: large;
+        }
+
+        #words {
+            padding: 20px 0px;
+            line-height: 1.5;
+        }
+
+        #title {
+            align-self: flex-start;
+            position: fixed;
+            margin: 10px 10px;
+            background-color: rgba(209, 209, 209, 0.405);
+            padding: 2px 6px;
+            backdrop-filter: blur(20px);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 id="title">
+        Number to Words
+    </h1>
+
+    <div id="card">
+        <label for="integer">
+            Enter Number: <input class="text-l" type="number" name="number" id="integer" min="0" placeholder="456"
+                autocomplete="false">
+        </label>
+        <div>
+            <p id="words"></p>
+        </div>
+        <button class="copy-btn btn" onclick="copyWords()">copy</button>
+        <button class="btn" onclick="e => setIntegerToWords(e)" id="convert_btn">Convert to Words</button>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+        console.log("Hello world")
+        const integer = document.getElementById("integer");
+        const words = document.getElementById("words");
+        const copyBtn = document.querySelector(".copy-btn");
+        integer.addEventListener('input', setIntegerToWords);
+        integer.addEventListener('propertychange', setIntegerToWords);
+
+        function setIntegerToWords(e) {
+            words.innerText = integerToWords(e.target.value);
+            console.log(integerToWords(136489));
+        }
+        function copyWords() {
+            navigator.clipboard.writeText(words.innerText);
+            copyBtn.innerText = "copied!";
+            setTimeout(() => {
+                copyBtn.innerText = "copy";
+            }, 2000)
+        }
+
+        function integerToWords(num) {
+            if (num == 0)
+                return "Zero";
+            return helper(num).substr(1);
+        }
+        const ones = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"];
+
+        const tens = ["Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+
+        function helper(n) {
+
+            if (n >= 1000000000)
+                return helper(Math.floor(n / 1000000000)) + " Billion" + helper(n % 1000000000);
+
+            if (n >= 1000000)
+                return helper(Math.floor(n / 1000000)) + " Million" + helper(n % 1000000);
+
+            if (n >= 1000)
+                return helper(Math.floor(n / 1000)) + " Thousand" + helper(n % 1000);
+
+            if (n >= 100)
+                return helper(Math.floor(n / 100)) + " Hundred" + helper(n % 100);
+
+            if (n >= 20)
+                return " " + tens[Math.floor(n / 10) - 2] + helper(n % 10);
+
+            if (n >= 1)
+                return " " + ones[n - 1];
+
+            return "";
+        }
+
+
+    </script>
+</body>
+
+</html>
